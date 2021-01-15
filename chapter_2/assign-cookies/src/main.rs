@@ -10,17 +10,13 @@ fn find_content_children(g: Vec<i32>, s: Vec<i32>) -> i32 {
     let mut s = s;
     g.sort();
     s.sort();
-    let mut cookieIdx = 0;
-    let mut satisfiedKids = 0;
-    for kid in g {
-        for x in cookieIdx..s.len() {
-            cookieIdx=x+1;
-            if s[x] >= kid {
-                satisfiedKids+=1;
-                break;
-            }
+    let mut gi = 0;
+    let mut si = 0;
+    while gi < g.len() && si < s.len() {
+        if g[gi] <= s[si] {
+            gi+=1;
         }
-        
+        si+=1;
     }
-    satisfiedKids
+    gi as i32
 }
