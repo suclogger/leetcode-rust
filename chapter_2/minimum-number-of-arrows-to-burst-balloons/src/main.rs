@@ -21,10 +21,8 @@ pub fn find_min_arrow_shots(points: Vec<Vec<i32>>) -> i32 {
         }
         if points[i][0] > prev {
             arrow_counts +=1;
-            prev = points[i][1];
-        } else {
-            prev = points[i][1];
         }
+        prev = points[i][1];
     }
     arrow_counts
 }
