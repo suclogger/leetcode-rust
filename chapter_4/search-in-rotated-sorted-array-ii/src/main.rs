@@ -14,25 +14,27 @@ pub fn search(nums: Vec<i32>, target: i32) -> bool {
         return false;
     }
     let mut l = 0;
-    let mut r = nums.len() - 1;
-    while l <= r {
+    let mut r = nums.len();
+    while l < r {
+        // 要点1 向下取整的时候，左指针l是一定要动的
         let mid = l + (r - l)/2;
         if nums[mid] == target {
             return true;
         }
         if nums[l] == nums[mid] {
             l+=1;
-        } else if nums[mid] <= nums[r] {
-            if target > nums[mid] && target <= nums[r] {
-                l = mid + 1;
+        } else if nums[l] <= nums[mid] {
+            // 两个元素时 l==mid，所有要考虑相等情况
+            if target >= nums[l] && target < nums[mid] {
+                r = mid;
             } else {
-                r = mid - 1;
+                l = mid + 1;
             }
         } else {
-            if target < nums[mid] && target >= nums[l] {
-                r = mid - 1;
-            } else {
+            if target > nums[mid] && target <= nums[r-1] {
                 l = mid + 1;
+            } else {
+                r = mid;
             }
         }
     }
