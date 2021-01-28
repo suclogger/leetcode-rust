@@ -2,6 +2,9 @@ fn main() {
     let v1 = vec![1,3];
     let v2 = vec![2];
     assert_eq!(2.0, find_median_sorted_arrays(v1, v2));
+    let v1 = vec![2];
+    let v2 = vec![1,3,4];
+    assert_eq!(2.5, find_median_sorted_arrays(v1, v2));
 
 }
 /**
@@ -15,47 +18,34 @@ pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
     let n = nums2.len();
     return if (m + n) % 2 == 1 {
         let mid = (m + n) / 2;
-        find_median_sorted_arrays_inner(&nums1, &nums2, mid + 1) * 1.0
+        find_median_sorted_arrays_inner(&nums1, &nums2, mid + 1) as f64
     } else {
         let mid1 = (m + n) / 2 - 1;
         let mid2 = (m + n) / 2;
         (find_median_sorted_arrays_inner(&nums1, &nums2, mid1 + 1) +
-            find_median_sorted_arrays_inner(&nums1, &nums2, mid2 + 1)) / 2.0
+            find_median_sorted_arrays_inner(&nums1, &nums2, mid2 + 1)) as f64  / 2.0
     }
 }
 
 fn find_median_sorted_arrays_inner(nums1: &Vec<i32>, nums2: &Vec<i32>, mut k : usize) -> i32 {
-    // 特殊处理
-    if nums1.len() + nums2.len() == 0 {
-        return 0;
-    }
-    if nums1.len() + nums2.len() == 1 {
-        return if nums1.len()==1 { nums1[0] } else { nums2[0] }
-    }
-
     let mut l = 0;
     let mut r = 0;
-    while k > 0 {
-        // nums1 的第 k/2 -1 与 nums2 的第 k/2 -1比较，先考虑下边界
-        if k/2 - 1 >= nums1.len() {
-            if nums1.len() == 0 {
-                return nums2[k-1];
-            }
-            let l_max = nums1[nums1.len() - 1];
-            let r_k = nums2[k/2 -1];
-            if l_max < r_k {
-                // 实际剔除的量
-                k -= nums1.len() - l;
-                l = nums1.len() - 1;
-            }
+    loop {
+        if l == nums1.len() || r == nums2.len() {
+            break if l == nums1.len() { nums2[k - 1 + r] } else { nums1[k - 1 + l] }
+        }
+        if k == 1 {
+            break if nums1[l] > nums2[r] { nums2[r] } else { nums1[l] }
         }
 
-        if nums1[k/2-1 + l] <= nums2[k/2-1 + r] {
-            l = k/2;
+        let new_l = std::cmp::min(nums1.len(), l + k/2) - 1;
+        let new_r = std::cmp::min(nums2.len(), r + k/2) - 1;
+        if nums1[new_l] <= nums2[new_r] {
+            k -= new_l - l + 1;
+            l = new_l + 1;
         } else {
-            r = k/2;
+            k -= new_r - r + 1;
+            r = new_r + 1;
         }
-        k -= (k/2 - 1);
     }
-    if l < nums1.len() - 1 { nums1[l] } else { nums2[r] }
 }
