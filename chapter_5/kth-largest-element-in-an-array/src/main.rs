@@ -6,18 +6,17 @@ fn main() {
 pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
     let len = nums.len();
     let mut nums = nums;
-    quick_sort(&mut nums, 0, len-1);
-    nums.reverse();
-    nums[(k-1) as usize]
+    quick_select(&mut nums, 0, len-1,  (len - k as usize) as usize)
 }
 
-fn quick_sort(nums: &mut Vec<i32>, l: usize, r: usize) {
-    if l < r {
-        let partition = partition(nums, l, r);
-        if partition > 0 {
-            quick_sort(nums, l, partition - 1);
-        }
-        quick_sort(nums, partition + 1, r);
+fn quick_select(nums: &mut Vec<i32>, l: usize, r: usize, k: usize) -> i32 {
+    let partition = partition(nums, l, r);
+    return if partition == k {
+        nums[partition]
+    } else if partition > 0 && partition > k {
+        quick_select(nums, l, partition - 1, k)
+    } else {
+        quick_select(nums, partition + 1, r, k)
     }
 }
 
