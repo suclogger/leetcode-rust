@@ -1,3 +1,5 @@
+mod stack;
+
 fn main() {
     let v = vec![vec![0,0,1,0,0,0,0,1,0,0,0,0,0],
          vec![0,0,0,0,0,0,0,1,1,1,0,0,0],
@@ -8,6 +10,7 @@ fn main() {
          vec![0,0,0,0,0,0,0,1,1,1,0,0,0],
          vec![0,0,0,0,0,0,0,1,1,0,0,0,0]];
     assert_eq!(6, max_area_of_island(v));
+    // assert_eq!(6, stack::max_area_of_island_stack(v));
 }
 
 pub fn max_area_of_island(grid: Vec<Vec<i32>>) -> i32 {
