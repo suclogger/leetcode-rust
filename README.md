@@ -1,8 +1,8 @@
 # leetcode-rust
 
-
-
 Another Leetcode solution repo written by Rust.
+
+Leetcode-cn account page :  https://leetcode-cn.com/u/suclogger/
 
 
 
@@ -12,9 +12,17 @@ Another Leetcode solution repo written by Rust.
 * I have to become another Zuotijia under the culture of Neijuan
 
 
+## Ranking
+
+|Date|Solved|Global Rank|Rank|
+|----|----|----|----|
+|20210709|350|21453|0|
+
 
 ## Credit
 
 https://leetcode-cn.com/
 
 https://github.com/changgyhub/leetcode_101
+
+https://www.youtube.com/user/wisdompeak
