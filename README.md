@@ -5,11 +5,10 @@ Another Leetcode solution repo written by Rust.
 Leetcode-cn account page :  https://leetcode-cn.com/u/suclogger/
 
 
+## Aim
 
-## Why
-
-* I try to learn Rust from simple code.
-* I have to become another Zuotijia under the culture of Neijuan
+* Learn Rust from simple code.
+* Become another [book smart](https://zh.wikipedia.org/wiki/%E5%81%9A%E9%A2%98%E5%AE%B6) under the culture of [Involution](https://zh.wikipedia.org/wiki/%E5%86%85%E5%8D%B7%E5%8C%96).
 
 
 ## Ranking
