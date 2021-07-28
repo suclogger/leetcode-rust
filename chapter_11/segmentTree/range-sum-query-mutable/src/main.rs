@@ -12,31 +12,33 @@ pub struct SegTree {
 }
 
 impl SegTree {
-    // init while create
-    fn new(start: i32, end: i32, nums: &Vec<i32>) -> Self {
-        if start == end  {
-            return SegTree {
-                info: nums[start as usize],
-                start,
-                end,
-                left: Option::None,
-                right: Option::None,
-            }
-        }
-        let mut node = SegTree {
+    fn new(start: i32, end: i32) -> Self {
+        SegTree {
             info: 0,
             start,
             end,
             left: Option::None,
             right: Option::None,
-        };
-        let mid = (start + end ) / 2;
-        let l = SegTree::new(start, mid, nums);
-        let r = SegTree::new(mid + 1, end, nums);
-        node.info = l.info + r.info;
-        node.left = Option::Some(Box::new(l));
-        node.right = Option::Some(Box::new(r));
-        node
+        }
+    }
+
+    fn init(&mut self, nums: &Vec<i32>) {
+        if self.start == self.end {
+            self.info = nums[self.start as usize];
+            return;
+        }
+        let mid = (self.start + self.end ) / 2;
+        if let None = self.left {
+            let l = SegTree::new(self.start, mid);
+            let r = SegTree::new(mid + 1, self.end);
+            self.left = Option::Some(Box::new(l));
+            self.right = Option::Some(Box::new(r));
+        }
+
+        self.left.as_mut().unwrap().init(nums);
+        self.right.as_mut().unwrap().init(nums);
+
+        self.info = self.left.as_ref().unwrap().info + self.right.as_ref().unwrap().info;
     }
 
     fn update_single(&mut self, idx: i32, val: i32) {
@@ -80,9 +82,11 @@ struct NumArray {
  */
 impl NumArray {
     fn new(nums: Vec<i32>) -> Self {
-        NumArray {
-            seg_tree : SegTree::new(0, nums.len() as i32 - 1, &nums),
-        }
+        let mut na = NumArray {
+            seg_tree : SegTree::new(0, nums.len() as i32 - 1),
+        };
+        na.seg_tree.init(&nums);
+        na
     }
 
     fn update(&mut self, index: i32, val: i32) {
