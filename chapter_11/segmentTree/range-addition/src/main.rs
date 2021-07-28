@@ -65,22 +65,6 @@ impl SegmentTreeNode {
             self.tag = 0;
         }
     }
-
-    fn query_single(&mut self, idx: i32) -> i32{
-        if idx < self.start || idx > self.end {
-            return 0;
-        }
-
-        if self.start == self.end && self.start == idx {
-            return self.info;
-        }
-        self.push_down();
-        return if idx > (self.start + (self.end - self.start) / 2) {
-            self.right.as_mut().unwrap().query_single(idx)
-        } else {
-            self.left.as_mut().unwrap().query_single(idx)
-        }
-    }
 }
 
 pub fn get_modified_array(length: i32, updates: Vec<Vec<i32>>) -> Vec<i32> {
@@ -91,9 +75,16 @@ pub fn get_modified_array(length: i32, updates: Vec<Vec<i32>>) -> Vec<i32> {
         seg_tree_node.update_range(update[0], update[1], update[2]);
     }
 
-    let mut ans = Vec::new();
-    for i in 0..length {
-        ans.push(seg_tree_node.query_single(i));
+    fn dfs(node: &mut SegmentTreeNode, ans: &mut Vec<i32>) {
+        if node.start == node.end {
+            ans.push(node.info);
+            return;
+        }
+        node.push_down();
+        dfs(node.left.as_mut().unwrap(), ans);
+        dfs(node.right.as_mut().unwrap(), ans);
     }
+    let mut ans = Vec::new();
+    dfs(&mut seg_tree_node, &mut ans);
     ans
 }
