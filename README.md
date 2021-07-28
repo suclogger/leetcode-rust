@@ -15,6 +15,7 @@ Leetcode-cn account page :  https://leetcode-cn.com/u/suclogger/
 
 |Date|Solved|Cn-Site Rank|Global Contest Rank|Contests|
 |----|----|----|----|----|
+|20210729|405|15,907|45,672|4|
 |20210728|395|16,295|45,672|4|
 |20210726|395|16,570|53,961|2|
 |20210722|386|17,600|53,961|2|
