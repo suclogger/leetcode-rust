@@ -1,5 +1,5 @@
 [package]
-name = "number-of-visible-people-in-a-queue"
+name = "the-skyline-problem"
 version = "0.1.0"
 authors = ["pr0found <runqiang.crq@alibaba-inc.com>"]
 edition = "2018"
