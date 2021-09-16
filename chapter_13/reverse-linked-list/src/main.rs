@@ -23,8 +23,8 @@ pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut head = head;
     let mut pre = Option::None;
     while let Some(mut cur) = head {
-        head = (*cur).next.take();
-        (*cur).next = pre;
+        head = cur.next.take();
+        cur.next = pre;
         pre = Option::Some(cur);
     }
     pre
